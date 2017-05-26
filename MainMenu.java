@@ -1,10 +1,15 @@
 import java.io.*;
+import javax.imageio.ImageIO;
 import java.util.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 /*
  * Main menu class
  * 
@@ -12,48 +17,37 @@ import java.awt.image.BufferedImage;
  * ICS4U0
  * Ms. Krasteva
  * */
-public class MainMenu implements ActionListener{
-      JFrame frame = new JFrame("Main Menu");
-  public MainMenu()
-  {
-    Scanner sc = new Scanner(System.in);
-    frame.setSize(1024,576);
-    frame.setVisible(true);
-    
-    JButton playButton = new JButton("Play");
-    JButton hsButton = new JButton("High Scores");
-    JButton exitButton = new JButton("Exit");
-    JButton inButton = new JButton("Instructions");
-    
-    JLabel mainMenuLabel= new JLabel("Main Menu");
-    
-    exitButton.addActionListener(this);
-    
-    
 
+public class MainMenu extends JPanel {
 
-    
-    JPanel pane = new JPanel(new FlowLayout());
-    pane.add(mainMenuLabel);
-    pane.add(playButton);
-    pane.add(hsButton);
-    pane.add(inButton);
-    pane.add(exitButton);
-    
-    
-    frame.add(pane); 
-  }
-  public void actionPerformed (ActionEvent ae)
+   JLabel background;
+  /**Array keeping all the button images*/
+  JLabel[] buttons = new JLabel[]{new JLabel(new ImageIcon("images\\mainmenu_draft1.png"))};
+  /**Array keeping track of button images of selected buttons*/
+  JLabel[] selButtons = new JLabel[]{new JLabel(new ImageIcon("images\\mainmenu_draft1.png"))};
+  public MainMenu() 
   {
-    
-    if (ae.getActionCommand().equals("Exit"))
-     {
-       frame.dispose();
-    }
+    super(null);
+   //background = new JLabel(new ImageIcon("pyramids.png"));
+   //background.setBounds(0, 0, 1024, 576);
+   buttons[0].setBounds(0,0,1024,576);
+   draw(2);
   }
-  public static void main(String[] args)
+  public void draw(int selected)
+  {
+    this.add(buttons[0]);
+    //this.add(background);
+  }
+  
+  public static void main(String[] args) throws IOException
   {
        MainMenu mm = new MainMenu();
+       JFrame fram = new JFrame();
+       fram.add(mm);
+       fram.setSize(1024,615);
+       fram.setVisible(true);
+      
+       
   }
    
 }
