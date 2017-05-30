@@ -26,7 +26,7 @@ public class Highscores extends JPanel {
   background.setBounds(0, 0, 1024, 650);
   
   backButton = new JButton (new ImageIcon("Images\\back button.png"));
-  backButton.setBounds(300, 300, 394, 225);
+  backButton.setBounds(880, 555, 136, 80);
   backButton.setBackground(new Color (120,79,37));
   this.add(backButton);
   this.add(background);
