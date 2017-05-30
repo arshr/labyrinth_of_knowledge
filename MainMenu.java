@@ -1,10 +1,15 @@
 import java.io.*;
+import javax.imageio.ImageIO;
 import java.util.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 /*
  * Main menu class
  * 
@@ -12,48 +17,75 @@ import java.awt.image.BufferedImage;
  * ICS4U0
  * Ms. Krasteva
  * */
-public class MainMenu implements ActionListener{
-      JFrame frame = new JFrame("Main Menu");
-  public MainMenu()
+
+public class MainMenu extends JPanel {
+ Application app;
+   JLabel background;
+   JButton playButton;
+   JButton iButton;
+   JButton hsButton;
+   JButton exitButton;
+  
+  public MainMenu(Application app) 
   {
-    Scanner sc = new Scanner(System.in);
-    frame.setSize(1024,576);
-    frame.setVisible(true);
-    
-    JButton playButton = new JButton("Play");
-    JButton hsButton = new JButton("High Scores");
-    JButton exitButton = new JButton("Exit");
-    JButton inButton = new JButton("Instructions");
-    
-    JLabel mainMenuLabel= new JLabel("Main Menu");
-    
-    exitButton.addActionListener(this);
-    
-    
-
-
-    
-    JPanel pane = new JPanel(new FlowLayout());
-    pane.add(mainMenuLabel);
-    pane.add(playButton);
-    pane.add(hsButton);
-    pane.add(inButton);
-    pane.add(exitButton);
-    
-    
-    frame.add(pane); 
+    super(null);
+ this.app = app;
+    init();
   }
-  public void actionPerformed (ActionEvent ae)
-  {
-    
-    if (ae.getActionCommand().equals("Exit"))
-     {
-       frame.dispose();
+  
+  public void init(){
+   background = new JLabel(new ImageIcon("images\\mainmenu.png"));
+   background.setBounds(0, 0, 1024, 650);
+   
+   
+   playButton = new JButton (new ImageIcon("images\\play button.png"));
+   playButton.setBounds(320, 180, 400, 100);
+   playButton.setBackground(new Color (120,79,37));
+   
+   iButton = new JButton(new ImageIcon("images\\inst button.png"));
+   iButton.setBounds(320, 290, 400, 100);
+   iButton.setBackground(new Color (120,79,37));
+   
+   hsButton = new JButton(new ImageIcon("images\\highscores button.png"));
+   hsButton.setBounds(320, 400, 400, 100);
+   hsButton.setBackground(new Color (120,79,37));
+   
+   exitButton = new JButton (new ImageIcon("images\\exit button.png"));
+   exitButton.setBounds(320, 510, 400, 100);
+   exitButton.setBackground(new Color (120,79,37));
+   
+   this.add(playButton);
+   this.add(iButton);
+   this.add(hsButton); 
+   this.add(exitButton);
+   this.add(background);
+   
+   playButton.addActionListener(new ActionListener (){
+    public void actionPerformed (ActionEvent e){
+     app.goToPane(0);
     }
+   });
+   
+   iButton.addActionListener(new ActionListener (){
+    public void actionPerformed (ActionEvent e){
+     app.goToPane(2);
+    }
+   });
+   
+   hsButton.addActionListener(new ActionListener (){
+    public void actionPerformed (ActionEvent e){
+     app.goToPane(3);
+    }
+   });
+   
+   exitButton.addActionListener(new ActionListener (){
+    public void actionPerformed (ActionEvent e){
+     System.exit(0);
+    }
+   });
+
+   //ADD FOLDING OUT ANIMATION
   }
-  public static void main(String[] args)
-  {
-       MainMenu mm = new MainMenu();
-  }
+
    
 }
