@@ -11,31 +11,31 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Highscores extends JPanel {
- Application app;
- JLabel background;
- JButton backButton;
+	Application app;
+	JLabel background;
+	JButton backButton;
 
- public Highscores(Application app) {
-  super(null);
-  this.app = app;
-  init();
- }
+	public Highscores(Application app) {
+		super(null);
+		this.app = app;
+		init();
+	}
 
- public void init() {
-  background = new JLabel(new ImageIcon("images\\highScores.png"));
-  background.setBounds(0, 0, 1024, 650);
-  
-  backButton = new JButton (new ImageIcon("images\\back button.png"));
-  backButton.setBounds(300, 300, 394, 225);
-  backButton.setBackground(new Color (120,79,37));
-  this.add(backButton);
-  this.add(background);
-  
-  backButton.addActionListener(new ActionListener (){
-     public void actionPerformed (ActionEvent e){
-      app.goToPane(1);
-     }
-  });
-  
- }
+	public void init() {
+		background = new JLabel(new ImageIcon("highScores.png"));
+		background.setBounds(0, 0, 1024, 650);
+		
+		backButton = new JButton (new ImageIcon("back button.png"));
+		backButton.setBounds(300, 300, 394, 225);
+		backButton.setBackground(new Color (120,79,37));
+		this.add(backButton);
+		this.add(background);
+		
+		backButton.addActionListener(new ActionListener (){
+			  public void actionPerformed (ActionEvent e){
+				  app.goToPane(1);
+			  }
+		});
+		
+	}
 }
