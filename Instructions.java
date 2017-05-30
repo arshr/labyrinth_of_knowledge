@@ -29,7 +29,7 @@ public class Instructions extends JPanel {
     
     
     backButton = new JButton (new ImageIcon("Images\\back button.png"));
- backButton.setBounds(620, 410, 394, 225);
+ backButton.setBounds(620, 410,  136, 80);
  backButton.setBackground(new Color (120,79,37));
  this.add(backButton);
  this.add(background);
