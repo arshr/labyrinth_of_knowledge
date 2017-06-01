@@ -13,32 +13,32 @@ import java.awt.event.ActionListener;
  * Ms. Krasteva
  * */
 public class Instructions extends JPanel {
-	Application app;
+ Application app;
   JLabel background;
   JButton backButton;
   
-  public Instructions(	Application app) {
+  public Instructions( Application app) {
     super(null);
     this.app = app;
     init();
   }
   
   public void init() {
-    background = new JLabel(new ImageIcon("Instructions.png"));
+    background = new JLabel(new ImageIcon("Images\\Instructions.png"));
     background.setBounds(0, 0, 1024, 650);
     
     
-    backButton = new JButton (new ImageIcon("back button.png"));
-	backButton.setBounds(620, 410, 394, 225);
-	backButton.setBackground(new Color (120,79,37));
-	this.add(backButton);
-	this.add(background);
-	
-	backButton.addActionListener(new ActionListener (){
-		  public void actionPerformed (ActionEvent e){
-			  app.goToPane(1);
-		  }
-	});
-	 
+    backButton = new JButton (new ImageIcon("Images\\back button.png"));
+ backButton.setBounds(620, 410, 394, 225);
+ backButton.setBackground(new Color (120,79,37));
+ this.add(backButton);
+ this.add(background);
+ 
+ backButton.addActionListener(new ActionListener (){
+    public void actionPerformed (ActionEvent e){
+     app.goToPane(1);
+    }
+ });
+  
   }
 }
