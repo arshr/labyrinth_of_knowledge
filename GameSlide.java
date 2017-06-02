@@ -14,152 +14,166 @@ import java.awt.event.KeyListener;
  * Ms. Krasteva
  * */
 public class GameSlide extends Slide implements ActionListener, KeyListener {
- JLabel background;
- JButton backButton;
- JLabel upPos;
- JLabel downPos;
- JLabel leftPos;
- JLabel rightPos;
- Timer timer;
+	JLabel background;
+	JButton backButton;
+	JLabel upPos;
+	JLabel downPos;
+	JLabel leftPos;
+	JLabel rightPos;
 
- int dir;
- int step;
- int x;
- int y;
- int i;
- int speed = 5;
- 
- 
- public GameSlide(Application app) {
-  super(app);
-  init();
- }
+	JPanel characterPanel;
 
- public void init() {
-  background = new JLabel(new ImageIcon("room2.png"));
-  background.setBounds(0, 0, 1024, 650);
+	int exitX;
+	int exitY;
 
-  upPos = new JLabel(new ImageIcon("moveUp.png"));
-  downPos = new JLabel(new ImageIcon("moveDown.png"));
-  leftPos = new JLabel(new ImageIcon("moveLeft.png"));
-  rightPos = new JLabel(new ImageIcon("moveRight.png"));
+	int dir;
+	int x;
+	int y;
+	int i;
+	int speed = 5;
+	int startDir;// 1-Up, 2-Right, 3-Down, 4-Left
 
-  this.add(upPos);
-  this.add(downPos);
-  this.add(leftPos);
-  this.add(rightPos);
+	public GameSlide(Application app, String fileName, int startX, int startY, int exitX, int exitY, int startDir) {
+		super(app);
+		this.x = startX;
+		this.y = startY;
+		this.exitX = exitX;
+		this.exitY = exitY;
+		this.startDir = startDir;
+		init(fileName);
+	}
 
-  // button --------------------------------------------------
-  backButton = new JButton(new ImageIcon("back button.png"));
-  backButton.setBounds(880, 5, 136, 80);
-  backButton.setBackground(new Color(120, 79, 37));
-  this.add(backButton);
-  this.add(background);
+	public void init(String fileName) {
+		background = new JLabel(new ImageIcon(fileName));
+		background.setBounds(0, 0, 1024, 650);
 
-  backButton.addActionListener(new ActionListener() {
-   public void actionPerformed(ActionEvent e) {
-    app.goToPane(1);
-   }
-  });
-  // ------------------------------------------------------------
-  move (0,10,0,0);
-  addKeyListener(this);
- }
- 
- public void activate (){
-  this.requestFocus();
- }
- 
- public boolean isFocusable() {
-  return true;  
- }
+		upPos = new JLabel(new ImageIcon("moveUp.png"));
+		downPos = new JLabel(new ImageIcon("moveDown.png"));
+		leftPos = new JLabel(new ImageIcon("moveLeft.png"));
+		rightPos = new JLabel(new ImageIcon("moveRight.png"));
+		upPos.setBounds(0, 0, 83, 83);
+		downPos.setBounds(0, 0, 83, 83);
+		leftPos.setBounds(0, 0, 83, 83);
+		rightPos.setBounds(0, 0, 83, 83);
 
- // dir determines up down or left right (0 = up/down, 1 = left/right)
- // step determines when up and when down (for up/down movement) (step>0 =
- // downwards, step<0 = upwards)
- // and when right and when left (for left/right movement)
- // x and y are the starting position
- public void move(int dir, int step, int x, int y) {
-  this.dir = dir;
-  this.step = step;
-  this.x = x;
-  this.y = y;
-  this.i = 0;
+		characterPanel = new JPanel(null);
+		characterPanel.add(upPos);
+		characterPanel.add(downPos);
+		characterPanel.add(leftPos);
+		characterPanel.add(rightPos);
+		characterPanel.setBounds(x, y, 83, 83);
+		characterPanel.setBackground(new Color(0, 0, 0, 0));
+		characterPanel.setVisible(true);
 
-  int delay = 5;
-  timer = new Timer(delay, this);
-  timer.setRepeats(true);
-  timer.start();
- }
- 
-//Bounds 
-//874x
-//524y
- 
- public void actionPerformed(ActionEvent evt) {
-  //int xOriginal = x;
-  //int yOriginal = y;
-  // Up/down
-  if (dir == 0) {
-   // down
-   if (step > 0) {
-    downPos.setBounds(x, y + i, 330, 390);
-    i+=speed;
-    y+=speed;
-    if (i == step || (y+83)>524)
-     timer.stop();
-   }
-   // up
-   else {
-    upPos.setBounds(x, y + i, 330, 390);
-    i-=speed;
-    y-=speed;
-    if (i == step || y<130)
-     timer.stop();
-   }
-   // Left/right
-  } else {
-   // right
-   if (step > 0) {
-    rightPos.setBounds(x + i, y, 390, 330);
-    i+=speed;
-    x+=speed;
-    if (i == step || (x+83)>874)
-     timer.stop();
-   }
-   // left
-   else {
-    leftPos.setBounds(x + i, y, 390, 330);
-    i-= speed;
-    x-=speed;
-    if (i == step || x<153)
-     timer.stop();
-   }
-  }
- }
+		this.add(characterPanel);
 
- public void keyPressed(KeyEvent e) {
-     if(e.getKeyCode() == KeyEvent.VK_DOWN)
-      move (0,speed,x,y);
-     if(e.getKeyCode() == KeyEvent.VK_UP)
-      move (0,-speed,x,y);
-     if(e.getKeyCode()== KeyEvent.VK_LEFT)
-      move (1,-speed,x,y);
-     if(e.getKeyCode() == KeyEvent.VK_RIGHT)
-      move (1,speed,x,y);
-    
- }
+		// button --------------------------------------------------
+		backButton = new JButton(new ImageIcon("back button.png"));
+		backButton.setBounds(880, 5, 136, 80);
+		backButton.setBackground(new Color(120, 79, 37));
+		this.add(backButton);
+		this.add(background);
 
- public void keyReleased(KeyEvent arg0) {
-     timer.stop();
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				app.goToPane(1);
+			}
+		});
+		// ------------------------------------------------------------
+		addKeyListener(this);
+	}
 
- }
- 
- public void keyTyped(KeyEvent arg0) {
-  // TODO Auto-generated method stub
-  
- }
- 
- 
+	public void activate() {
+		turnCharacter(startDir);
+		this.requestFocus();
+	}
+
+	public boolean isFocusable() {
+		return true;
+	}
+	
+	private void turnCharacter(int direction) {
+		if (this.dir != direction) {
+			downPos.setVisible(direction == 3);
+			upPos.setVisible(direction == 1);
+			rightPos.setVisible(direction == 2);
+			leftPos.setVisible(direction == 4);
+			repaint();
+
+			this.dir = direction;
+		}
+	}
+
+	// dir determines up down or left right (0 = up/down, 1 = left/right)
+	// step determines when up and when down (for up/down movement) (step>0 =
+	// downwards, step<0 = upwards)
+	// and when right and when left (for left/right movement)
+	// x and y are the starting position
+	public void move(int dir) {
+		// down
+		if (dir == 3 && y < 450) {
+			y += speed;
+		}
+		// up
+		if (dir == 1 && y > 130) {
+			y -= speed;
+		}
+		// right
+		if (dir == 2 && x < 795) {
+			x += speed;
+		}
+		// left
+		if (dir == 4 && x > 150) {
+			x -= speed;
+		}
+		characterPanel.setBounds(x, y, 83, 83);
+	}
+
+	public void actionPerformed(ActionEvent evt) {
+
+	}
+
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+			startMove(3);
+		}
+		if (e.getKeyCode() == KeyEvent.VK_UP) {
+			startMove(1);
+		}
+		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			startMove(4);
+		}
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			startMove(2);
+		}
+	}
+
+	private void startMove(int direction) {
+		turnCharacter(direction);
+		move(direction);
+		if (detectExit()){
+			exit();
+		}
+		
+	}
+
+	private boolean detectExit() {
+		return Math.abs(x-exitX) < 30 && Math.abs(y-exitY)<30;
+	}
+	
+	private void exit(){
+		if (app.currentSlideIndex == 9)
+			app.goToPane(1);
+		else
+			app.goToPane(app.currentSlideIndex+1);
+	}
+	
+	public void keyReleased(KeyEvent arg0) {
+	}
+
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
 
 }
