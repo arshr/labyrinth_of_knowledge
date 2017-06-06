@@ -1,0 +1,65 @@
+import java.awt.FlowLayout;
+import java.awt.Font;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class Application extends JFrame {
+
+ Slide[] panes = new Slide [] {new SplashScreen(this),
+       new MainMenu(this),
+       new Instructions(this),
+       new Highscores(this),
+       new PlayGame(this),
+       new PickDifficulty(this)
+       };
+
+ int currentSlideIndex;
+ int difficulty; 
+ 
+ JPanel mapPanel;
+ JPanel dunPanel;
+ 
+ Question question;
+ 
+ public Application (){
+  super("Labyrinth of Knowledge");
+  for (int i = 0; i<panes.length;i++){
+   if(i!=4)
+   this.add(panes[i]);
+   panes[i].setVisible(false);
+  }
+  currentSlideIndex = 1;
+
+
+  this.setSize(1042,690);
+  this.setVisible(true);
+  goToPane(currentSlideIndex);
+ }
+
+  
+ public void goToPane (int nextPaneIndex){
+  Slide nextPane;
+  if(nextPaneIndex==4)
+  {
+    panes[4] = new PlayGame(this);
+    this.add(panes[4]);
+  }
+  panes [currentSlideIndex].setVisible(false);
+  nextPane = panes [nextPaneIndex];
+  nextPane.setVisible(true);
+  nextPane.setSize(1024,650);
+  nextPane.setBounds(0, 0, 1024, 690);
+  nextPane.repaint();
+  nextPane.activate();
+  currentSlideIndex = nextPaneIndex;
+    }
+ 
+ public static void main(String[] args)
+ {
+  Application a = new Application ();
+ }
+ 
+}
